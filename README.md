@@ -12,7 +12,7 @@ AOP Log facilities to rescue you from logging java methods
 	</dependency>
 	```
 
-- optinally dependencies, alibaba's FastJson or Jackson will be auto detected to seriliaze the arguments and results. If neither no found on path, it will default to Object.toString()
+- optinally dependencies, alibaba's FastJson or Jackson will be auto detected to seriliaze the arguments and results. If neither found on the path, it will default to Object.toString()
 
 	```xml
 	<dependency>
@@ -21,9 +21,9 @@ AOP Log facilities to rescue you from logging java methods
 	</dependency>
 	```
 	```xml
-   <dependency>
-		 <groupId>com.fasterxml.jackson.core</groupId>
-		 <artifactId>jackson-databind</artifactId>
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>
+		<artifactId>jackson-databind</artifactId>
 	</dependency>
 
 	```
@@ -56,7 +56,7 @@ c.g.seahuang.log.stub.TesteeService      :
 <b>Purpose Success! TesteeService.simpleCall(stringArg="AA",intArg=10) returns "result"</b></pre>
 
 - On exception case:
-<pre>ExexptionTest Fail! TesteeService.throwException(stringArg="AA",intArg=10)
+<pre><b>ExexptionTest Fail! TesteeService.throwException(stringArg="AA",intArg=10)</b>
 	
 java.lang.RuntimeException: Intentional Exception
 		at com.github.seahuang.log.stub.TesteeService.throwException(TesteeService.java:35) ~[test-classes/:na]
