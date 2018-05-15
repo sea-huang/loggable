@@ -24,7 +24,7 @@ public class TesteeServiceTest {
 		testeeService.returnVoid("AA", 10);
 	}
 	
-	@Test
+	@Test(expected=Exception.class)
 	public void testThrowException(){
 		testeeService.throwException("AA", 10);
 	}
@@ -34,12 +34,12 @@ public class TesteeServiceTest {
 		testeeService.customizeLog("AA", new RuntimeException("RE"));
 	}
 	
-	@Test
+	@Test(expected=Exception.class)
 	public void validateParameters(){
 		testeeService.validateParameters("", null);
 	}
 	
-	@Test
+	@Test(expected=Exception.class)
 	public void validateReturn(){
 		testeeService.validateParameters("AA", 1);
 	}

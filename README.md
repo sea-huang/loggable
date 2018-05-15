@@ -1,26 +1,54 @@
 # loggable
 AOP Log facilities to rescue you from logging java methods
 
-### Bring in the facilities
-<pre><code><b>@EnableLoggable</b>
-@Configuration
-public class AnyConfigClass{
+### Set up
+- add maven dependency:
 
-}
-</code></pre>
+	```xml
+	<dependency>
+	  <groupId>com.github.sea-huang</groupId>
+	  <artifactId>loggable</artifactId>
+	  <version>1.0.0</version>
+	</dependency>
+	```
+
+- optinally dependencies, alibaba's FastJson or Jackson will be auto detected to seriliaze the arguments and results. If neither no found on path, it will default to Object.toString()
+
+	```xml
+	<dependency>
+       <groupId>com.alibaba</groupId>
+       <artifactId>fastjson</artifactId>
+	</dependency>
+	```
+	```xml
+   <dependency>
+		 <groupId>com.fasterxml.jackson.core</groupId>
+		 <artifactId>jackson-databind</artifactId>
+	</dependency>
+
+	```
+	
+- Bring in the facilities
+
+	<pre><code><b>@EnableLoggable</b>
+	@Configuration
+	public class AnyConfigClass{
+	
+	}
+	</code></pre>
 
 ### Usage Examples
 
 - Service to be tested 
-<pre><code>@Service
-public class TesteeService {
-	
-	<b>@Loggable("Purpose")</b>
-	public String simpleCall(String stringArg, Integer intArg){
-		return "result";
+
+	<pre><code>@Service
+	public class TesteeService {
+		<b>@Loggable("Purpose")</b>
+		public String simpleCall(String stringArg, Integer intArg){
+			return "result";
+		}
 	}
-}
-</code></pre>
+	</code></pre>
 
 - Just add the @Loggable annotation to the method, and it will log all the arguments and result value as below:
 <pre>2018-05-15 11:36:21.879  INFO 63398 --- [           main] 
