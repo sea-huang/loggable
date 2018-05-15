@@ -1,9 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.github.seahuang</groupId>
+	<groupId>com.github.sea-huang</groupId>
 	<artifactId>loggable</artifactId>
 	<version>1.0.0</version>
+	<name>loggable</name>
+	<description>AOP to log java methods developed by SeaHuang</description>
+	<url>https://github.com/sea-huang/loggable</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>sea-huang</id>
+			<name>SeaHuang</name>
+			<email>905810217@qq.com</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>https://github.com/sea-huang/loggable.git</connection>
+		<developerConnection>https://github.com/sea-huang/loggable.git</developerConnection>
+		<url>https://github.com/sea-huang/loggable.git</url>
+	</scm>
+	<issueManagement>
+		<system>github</system>
+		<url>https://github.com/sea-huang/loggable/issues</url>
+	</issueManagement>
 	
 	<properties>
 		<spring.boot.dependencies.version>1.5.13.RELEASE</spring.boot.dependencies.version>
