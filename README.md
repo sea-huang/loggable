@@ -28,9 +28,7 @@ c.g.seahuang.log.stub.TesteeService      :
 <b>Purpose Success! TesteeService.simpleCall(stringArg="AA",intArg=10) returns "result"</b></pre>
 
 - On exception case:
-
-- ```
-	ExexptionTest Fail! TesteeService.throwException(stringArg="AA",intArg=10)
+<pre>ExexptionTest Fail! TesteeService.throwException(stringArg="AA",intArg=10)
 	
 	java.lang.RuntimeException: Intentional Exception
 		at com.github.seahuang.log.stub.TesteeService.throwException(TesteeService.java:35) ~[test-classes/:na]
@@ -43,7 +41,7 @@ c.g.seahuang.log.stub.TesteeService      :
 		at org.springframework.aop.aspectj.MethodInvocationProceedingJoinPoint.proceed(MethodInvocationProceedingJoinPoint.java:85) ~[spring-aop-4.3.7.RELEASE.jar:4.3.7.RELEASE]
 		at com.github.seahuang.log.LoggableAspect.log(LoggableAspect.java:18) ~[classes/:na]
 		...
-```
+</pre>
 
 - Wanna log only on Exception and keep silence in Success? Set Level.OFF on Success 
 <pre>
@@ -69,9 +67,9 @@ public String logWarnninngOnBusinessException(String one, Integer two){
 		...
 	}
 </pre>
-- - @LogLength only log the length of a collection or array.
-- - @LogIngore ignore the parameter or result when format the output
-- - @LogFormat give a self defined implementation class type for TypeFormatter, by which to format the parameter output
+  - @LogLength only log the length of a collection or array.
+  - @LogIngore ignore the parameter or result when format the output
+ - @LogFormat give a self defined implementation class type for TypeFormatter, by which to format the parameter output
 
 - Combine with Method Validation
 <pre>@Loggable("validateMethod")
