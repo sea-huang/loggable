@@ -30,7 +30,7 @@ c.g.seahuang.log.stub.TesteeService      :
 - On exception case:
 <pre>ExexptionTest Fail! TesteeService.throwException(stringArg="AA",intArg=10)
 	
-	java.lang.RuntimeException: Intentional Exception
+java.lang.RuntimeException: Intentional Exception
 		at com.github.seahuang.log.stub.TesteeService.throwException(TesteeService.java:35) ~[test-classes/:na]
 		at com.github.seahuang.log.stub.TesteeService$$FastClassBySpringCGLIB$$5d883f5f.invoke(<generated>) ~[test-classes/:na]
 		at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:204) ~[spring-core-4.3.7.RELEASE.jar:4.3.7.RELEASE]
@@ -62,10 +62,10 @@ public String logWarnninngOnBusinessException(String one, Integer two){
 - More complicated case:
 <pre>
 @Loggable("定制日志")
-	public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
+public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
 			, <b>@LogFormat(ExceptionTypeFormatter.class)</b> Exception t){
-		...
-	}
+	...
+}
 </pre>
   - @LogLength only log the length of a collection or array.
   - @LogIngore ignore the parameter or result when format the output
