@@ -20,7 +20,7 @@ import com.github.seahuang.log.formatter.type.TypeFormatter;
 @Validated
 public class TesteeService {
 	
-	@Loggable("简单调用")
+	@Loggable("Purpose")
 	public String simpleCall(String stringArg, Integer intArg){
 		return "result";
 	}
@@ -30,9 +30,9 @@ public class TesteeService {
 		
 	}
 	
-	@Loggable("测试异常")
+	@Loggable("ExexptionTest")
 	public String throwException(String stringArg, Integer intArg){
-		throw new RuntimeException("故意报个错");
+		throw new RuntimeException("Intentional Exception");
 	}
 	
 	@Loggable("定制日志")
@@ -49,6 +49,16 @@ public class TesteeService {
 		return null;
 	}
 	
+	@Loggable(value="SilenceSuccessTest", onSuccess=Level.OFF)
+	public String keepSilenceOnSuccess(String one, Integer two){
+		return null;
+	}
+	
+	@Loggable(value="WarnningOnBusinessException", warningOn=BusinessException.class)
+	public String logWarnninngOnBusinessException(String one, Integer two){
+		return null;
+	}
+	
 	
 	public static class ExceptionTypeFormatter implements TypeFormatter {
 		public String format(Level level, Object source) {
@@ -58,6 +68,9 @@ public class TesteeService {
 			Exception realType = (Exception) source;
 			return realType.getMessage();
 		}
+	}
+	
+	public static class BusinessException extends RuntimeException {
 		
 	}
 }

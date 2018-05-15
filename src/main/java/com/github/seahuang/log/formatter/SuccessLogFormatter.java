@@ -4,6 +4,7 @@ import java.lang.reflect.Parameter;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import com.github.seahuang.log.Level;
@@ -11,12 +12,15 @@ import com.github.seahuang.log.Loggable;
 import com.github.seahuang.log.Success;
 
 public class SuccessLogFormatter extends LogFormatterSupport<Success> {
+	@Value("${c.g.s.l.f.SuccessLogFormatter.successWord:Success}")
+	protected String successWord = "Success";
 	
 	public String format(Level level, JoinPoint jp, Success t) {
 		MethodSignature methodSignature = (MethodSignature)jp.getSignature();
 		Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
 		
-		StringBuilder result = new StringBuilder(loggable.value()).append(" 成功！")
+		StringBuilder result = new StringBuilder(loggable.value())
+			.append(" ").append(successWord).append("! ")
 			.append(methodSignature.getDeclaringType().getSimpleName())
 			.append(".").append(methodSignature.getMethod().getName())
 			.append("(");
