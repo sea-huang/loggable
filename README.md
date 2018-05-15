@@ -61,7 +61,7 @@ public String logWarnninngOnBusinessException(String one, Integer two){
 
 - More complicated case:
 <pre>
-@Loggable("定制日志")
+@Loggable("CustomizedLog")
 public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
 			, <b>@LogFormat(ExceptionTypeFormatter.class)</b> Exception t){
 	...
