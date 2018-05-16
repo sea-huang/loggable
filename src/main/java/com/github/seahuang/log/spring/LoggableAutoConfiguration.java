@@ -23,6 +23,7 @@ import com.github.seahuang.log.formatter.ThrowableLogFormatter;
 import com.github.seahuang.log.formatter.type.DefaultTypeFormatter;
 import com.github.seahuang.log.formatter.type.DefaultTypeFormatterAdapter;
 import com.github.seahuang.log.formatter.type.FastJsonTypeFormatter;
+import com.github.seahuang.log.formatter.type.GsonTypeFormatter;
 import com.github.seahuang.log.formatter.type.IgnoreTypeFormatter;
 import com.github.seahuang.log.formatter.type.JacksonTypeFormatter;
 import com.github.seahuang.log.formatter.type.LengthTypeFormatter;
@@ -95,7 +96,7 @@ public class LoggableAutoConfiguration {
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE - 3)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
-	@ConditionalOnClass(JSON.class)
+	@ConditionalOnClass(name="com.alibaba.fastjson.JSON")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TypeFormatter fastJsonTypeFormatter(){
@@ -104,7 +105,7 @@ public class LoggableAutoConfiguration {
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE - 2)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
-	@ConditionalOnClass(JSON.class)
+	@ConditionalOnClass(name="com.fasterxml.jackson.databind.ObjectMapper")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TypeFormatter jacksonTypeFormatter(){
@@ -112,6 +113,15 @@ public class LoggableAutoConfiguration {
 	}
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE - 1)
+	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
+	@ConditionalOnClass(name="com.google.gson.Gson")
+	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public TypeFormatter gsonTypeFormatter(){
+		return new GsonTypeFormatter();
+	}
+	
+	@Order(value = Ordered.LOWEST_PRECEDENCE)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)

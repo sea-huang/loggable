@@ -47,7 +47,7 @@
 		    <dependency>  
                 <groupId>org.springframework.boot</groupId>  
                 <artifactId>spring-boot-dependencies</artifactId>  
-                <version>1.5.2.RELEASE</version>  
+                <version>${spring.boot.dependencies.version}</version>  
                 <type>pom</type>  
                 <scope>import</scope>  
             </dependency>  
@@ -73,6 +73,11 @@
         <dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
+		    <optional>true</optional>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
 		    <optional>true</optional>
 		</dependency>
 		<dependency>
