@@ -95,7 +95,7 @@ public class LoggableAutoConfiguration {
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE - 3)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
-	@ConditionalOnClass(JSON.class)
+	@ConditionalOnClass(name="com.alibaba.fastjson.JSON")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TypeFormatter fastJsonTypeFormatter(){
@@ -104,14 +104,14 @@ public class LoggableAutoConfiguration {
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE - 2)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
-	@ConditionalOnClass(JSON.class)
+	@ConditionalOnClass(name="com.fasterxml.jackson.databind.ObjectMapper")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TypeFormatter jacksonTypeFormatter(){
 		return new JacksonTypeFormatter();
 	}
 	
-	@Order(value = Ordered.LOWEST_PRECEDENCE - 1)
+	@Order(value = Ordered.LOWEST_PRECEDENCE)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
