@@ -7,6 +7,7 @@
 - 1.0.0  主要功能  
 - 1.0.1  修复JSON框架自动修复机制  
 - 1.1.0  增加Gson支持， 新增记录时长功能<b>Log Duration</b> 
+- 1.1.1  修复不复用DurationRecorder
 
 ### 配置
 - 添加 Maven 依赖:

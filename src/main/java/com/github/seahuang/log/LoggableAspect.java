@@ -3,6 +3,7 @@ package com.github.seahuang.log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.seahuang.log.duration.DurationRecorder;
@@ -13,11 +14,12 @@ public class LoggableAspect {
 	@Autowired
 	protected LogPrinter printer;
 	@Autowired
-	protected DurationRecorder durationRecorder; 
+	protected ObjectFactory<DurationRecorder> durationRecorderFactory; 
 	
 
 	@Around("@annotation(com.github.seahuang.log.Loggable)")
 	public Object log(ProceedingJoinPoint pjp) throws Throwable {
+		DurationRecorder durationRecorder = durationRecorderFactory.getObject();
 		durationRecorder.start(pjp);
 		try{
 			Object result = pjp.proceed();

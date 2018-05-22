@@ -7,6 +7,7 @@ AOP Log facilities to rescue you from logging java methods
 - 1.0.0  main features  
 - 1.0.1  fix autodetecting json frameworks  
 - 1.1.0  add support for Gson and <b>Log Duration</b> feature 
+- 1.1.1  fix DurationRecorder prototype
 
 ### Set up
 - add maven dependency:
