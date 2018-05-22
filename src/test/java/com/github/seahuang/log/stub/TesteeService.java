@@ -14,6 +14,7 @@ import com.github.seahuang.log.LogFormat;
 import com.github.seahuang.log.LogIgnore;
 import com.github.seahuang.log.LogLength;
 import com.github.seahuang.log.Loggable;
+import com.github.seahuang.log.duration.LogDuration;
 import com.github.seahuang.log.formatter.type.TypeFormatter;
 
 @Service
@@ -35,7 +36,7 @@ public class TesteeService {
 		throw new RuntimeException("Intentional Exception");
 	}
 	
-	@Loggable("定制日志")
+	@Loggable(value="定制日志", logDuration=LogDuration.YES)
 	public @LogLength List<String> customizeLog(@LogIgnore String one
 			, @LogFormat(ExceptionTypeFormatter.class) Exception t){
 		List<String> result = new ArrayList<String>();

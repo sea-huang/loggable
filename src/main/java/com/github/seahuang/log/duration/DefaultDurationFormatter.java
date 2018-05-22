@@ -21,12 +21,18 @@ public class DefaultDurationFormatter implements DurationFormatter {
 			result.append(days).append("D ");
 		}
 		if(hours > 0){
-			result.append(hours).append("H ");
+			if(hours < 10){
+				result.append("0");
+			}
+			result.append(hours).append(":");
 		}
-		if(mins > 0){
-			result.append(mins).append("m ");
+		if(hours > 0 || mins > 0){
+			if(mins < 10){
+				result.append("0");
+			}
+			result.append(mins).append(":");
 		}
-		result.append(secs).append(".").append(millisecs).append("s");
+		result.append(secs).append(".").append(millisecs);
 		
 		return result.toString();
 	}
