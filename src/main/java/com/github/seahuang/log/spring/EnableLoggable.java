@@ -13,5 +13,5 @@ import org.springframework.context.annotation.Import;
 @Import(LoggableAutoConfiguration.class)
 @Documented
 public @interface EnableLoggable {
-
+	boolean logDuration() default false;
 }

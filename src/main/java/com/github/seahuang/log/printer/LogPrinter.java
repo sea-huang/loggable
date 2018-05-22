@@ -4,7 +4,7 @@ import org.aspectj.lang.JoinPoint;
 
 public interface LogPrinter {
 	
-	void printSuccess(JoinPoint jp, Object result);
+	void printSuccess(JoinPoint jp, Object result, Long milliseconds);
 	
-	<T extends Throwable> void printThrowable(JoinPoint jp, T t);
+	<T extends Throwable> void printThrowable(JoinPoint jp, T t, Long milliseconds);
 }
