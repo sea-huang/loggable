@@ -1,15 +1,15 @@
-#### [中文](https://github.com/sea-huang/loggable/blob/master/README_CN.md)
+#### [English](https://github.com/sea-huang/loggable/blob/master/README.md)
 
 # loggable
-AOP Log facilities to rescue you from logging java methods
+这是一个 Log 工具，把你从无聊的日志代码中拯救出来。
 
-### Version changes
-- 1.0.0  main features  
-- 1.0.1  fix autodetecting json frameworks  
-- 1.1.0  add support for Gson and <b>Log Duration</b> feature 
+### 版本日志
+- 1.0.0  主要功能  
+- 1.0.1  修复JSON框架自动修复机制  
+- 1.1.0  增加Gson支持， 新增记录时长功能<b>Log Duration</b> 
 
-### Set up
-- add maven dependency:
+### 配置
+- 添加 Maven 依赖:
 
 	```xml
 	<dependency>
@@ -19,7 +19,7 @@ AOP Log facilities to rescue you from logging java methods
 	</dependency>
 	```
 
-- optinally dependencies, alibaba's FastJson, Jackson or Gson will be auto detected to seriliaze the arguments and results. If neither found on the path, it will default to Object.toString()
+- 可选的依赖，自动检测 阿里巴巴的 FastJson, Jackson 或 Gson 来序列化参数和结果. 如果以上都没有，默认使用 Object.toString()
 
 	```xml
 	<dependency>
@@ -40,7 +40,7 @@ AOP Log facilities to rescue you from logging java methods
 	</dependency>
 	```
 	
-- Bring in the facilities
+- 配置代码
 
 	<pre><code><b>@EnableLoggable</b>
 	@Configuration
@@ -49,9 +49,9 @@ AOP Log facilities to rescue you from logging java methods
 	}
 	</code></pre>
 
-### Usage Examples
+### 举个栗子
 
-- Service to be tested 
+- 被测试的服务： 
 
 	<pre><code>@Service
 	public class TesteeService {
@@ -62,12 +62,12 @@ AOP Log facilities to rescue you from logging java methods
 	}
 	</code></pre>
 
-- Just add the @Loggable annotation to the method, and it will log all the arguments and result value as below:
+- 把 @Loggable 加到方法上, 就会记录参数和返回结果:
 <pre>2018-05-15 11:36:21.879  INFO 63398 --- [           main] 
 c.g.seahuang.log.stub.TesteeService      :
 <b>Purpose Success! TesteeService.simpleCall(stringArg="AA",intArg=10) returns "result"</b></pre>
 
-- On exception case:
+- 或者记录异常:
 
 <pre><b>ExexptionTest Fail! TesteeService.throwException(stringArg="AA",intArg=10)</b>
 	
@@ -84,7 +84,7 @@ java.lang.RuntimeException: Intentional Exception
 		...
 </pre>
 
-- Wanna log only on Exception and keep silence in Success? Set Level.OFF on Success 
+- 想要只在异常时打印日志，成功时不打？ 把Success设为Level.OFF 
 <pre>
 @Loggable(value="SilenceSuccessTest", <b>onSuccess=Level.OFF</b>)
 public String keepSilenceOnSuccess(String one, Integer two){
@@ -92,7 +92,7 @@ public String keepSilenceOnSuccess(String one, Integer two){
 }
 </pre>
 
-- Wanna log warnning on some business exception?
+- 想要在异常时打印Warnning日志？
 <pre>
 @Loggable(value="Purpose", <b>warningOn=BusinessException.class</b>)
 public String logWarnninngOnBusinessException(String one, Integer two){
@@ -100,7 +100,7 @@ public String logWarnninngOnBusinessException(String one, Integer two){
 }
 </pre>
 
-- More complicated case:
+- 更复杂的栗子:
 <pre>
 @Loggable("CustomizedLog")
 public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
@@ -108,25 +108,25 @@ public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
 	...
 }
 </pre>
-  - @LogLength only log the length of a collection or array.
-  - @LogIngore ignore the parameter or result when format the output
- - @LogFormat give a self defined implementation class type for TypeFormatter, by which to format the parameter output
+  - @LogLength 只记录集合或数组的大小（长度）
+  - @LogIngore 忽略某个参数或结果
+ - @LogFormat 自定义参数或结果的输出
 
-- Combine with Method Validation
+- 可以和校验框架结合，打印出违反的校验约束
 <pre>@Loggable("validateMethod")
 public <b>@NotNull</b> List<String> validateParameters(<b>@NotEmpty</b> String one, <b>@NotNull</b> Integer two){
 		return null;
 }
 </pre>
 
-- Log the duration time each method call costs
-  - global setting, it will apply all @Loggable methods without specific LogDuration assigned or LogDuration equals to Default
+- 记录每次方法调用的时间
+  - 全局设置, 应用于所有没有特别配置的 @Loggable 方法 
   
   	```
   	@EnableLoggable(logDuration=true)
   	```
   
-  - each method call assign it's own Duration log strategy, which will override the global settings
+  - 对方法进行指定（覆盖全局配置）
   
   	```
   	@Loggable(logDuration=LogDuration.YES)
@@ -134,5 +134,5 @@ public <b>@NotNull</b> List<String> validateParameters(<b>@NotEmpty</b> String o
   
 
 ### Customization
-- Refer to com.github.seahuang.log.spring.LoggableAutoConfiguration. All classes are connected by interfaces, and can be replaced by your own implementation. 
-- An important explanation, global customized exception log formatter can be apply by implemnt com.github.seahuang.log.formatter.LogFormatter or extend com.github.seahuang.log.formatter.LogFormatterSupport(should register to spring). the most precise exception formatter will be used.
+- 参考 com.github.seahuang.log.spring.LoggableAutoConfiguration. 所有实现都是面向接口的, 可以被自己的实现替换. 
+- 值得一提的是, 全局的自定义异常log 可以实现 com.github.seahuang.log.formatter.LogFormatter 或 扩展 com.github.seahuang.log.formatter.LogFormatterSupport(要注入到spring). 最接近的异常类型的LogFormatter会被使用
