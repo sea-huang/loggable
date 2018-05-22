@@ -9,13 +9,19 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportAware;
 import org.springframework.context.annotation.Role;
 import org.springframework.core.Ordered;
+import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.type.AnnotationMetadata;
 
-import com.alibaba.fastjson.JSON;
 import com.github.seahuang.log.LoggableAspect;
 import com.github.seahuang.log.Success;
+import com.github.seahuang.log.duration.DefaultDurationFormatter;
+import com.github.seahuang.log.duration.DefaultDurationRecorder;
+import com.github.seahuang.log.duration.DurationFormatter;
+import com.github.seahuang.log.duration.DurationRecorder;
 import com.github.seahuang.log.formatter.ConstraintViolationExceptionLogFormatter;
 import com.github.seahuang.log.formatter.LogFormatter;
 import com.github.seahuang.log.formatter.SuccessLogFormatter;
@@ -23,6 +29,7 @@ import com.github.seahuang.log.formatter.ThrowableLogFormatter;
 import com.github.seahuang.log.formatter.type.DefaultTypeFormatter;
 import com.github.seahuang.log.formatter.type.DefaultTypeFormatterAdapter;
 import com.github.seahuang.log.formatter.type.FastJsonTypeFormatter;
+import com.github.seahuang.log.formatter.type.GsonTypeFormatter;
 import com.github.seahuang.log.formatter.type.IgnoreTypeFormatter;
 import com.github.seahuang.log.formatter.type.JacksonTypeFormatter;
 import com.github.seahuang.log.formatter.type.LengthTypeFormatter;
@@ -32,7 +39,8 @@ import com.github.seahuang.log.printer.DefaultLogPrinter;
 import com.github.seahuang.log.printer.LogPrinter;
 
 @Configuration
-public class LoggableAutoConfiguration {
+public class LoggableAutoConfiguration implements ImportAware {
+	protected Boolean logDuration;
 	
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
@@ -45,6 +53,22 @@ public class LoggableAutoConfiguration {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public LogPrinter logPrinter(){
 		return new DefaultLogPrinter();
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public DurationRecorder durationRecorder(){
+		DefaultDurationRecorder recorder =  new DefaultDurationRecorder();
+		recorder.setDefaultLogDuration(logDuration);
+		return recorder;
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public DurationFormatter durationFormatter(){
+		return new DefaultDurationFormatter();
 	}
 	
 	@Bean(name="c.g.s.l.f.SuccessLogFormatter")
@@ -113,10 +137,23 @@ public class LoggableAutoConfiguration {
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE)
 	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
+	@ConditionalOnClass(name="com.google.gson.Gson")
+	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public TypeFormatter gsonTypeFormatter(){
+		return new GsonTypeFormatter();
+	}
+	
+	@Order(value = Ordered.LOWEST_PRECEDENCE)
+	@Bean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@ConditionalOnMissingBean(name="c.g.s.l.f.t.DefaultTypeFormatter")
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TypeFormatter defaultTypeFormatter(){
 		return new DefaultTypeFormatter();
 	}
-	
+
+	public void setImportMetadata(AnnotationMetadata importMetadata) {
+		AnnotationAttributes enableLTSScheduling = AnnotationAttributes.fromMap(importMetadata.getAnnotationAttributes(EnableLoggable.class.getName()));
+		logDuration = enableLTSScheduling.getBoolean("logDuration");
+	}
 }

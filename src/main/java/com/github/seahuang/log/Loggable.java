@@ -8,6 +8,8 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.github.seahuang.log.duration.LogDuration;
+
 @Inherited
 @Documented
 @Retention(RUNTIME)
@@ -23,6 +25,12 @@ public @interface Loggable {
 	 * Set the log level on success, can be turn off by Level.OFF
 	 */
 	Level onSuccess() default Level.INFO;
+	/**
+	 * 设置时间记录策略
+	 * Set the LogDuration strategy. 
+	 * @see LogDuration 
+	 */
+	LogDuration logDuration() default LogDuration.DEFAULT;
 	/**
 	 * 指定异常类型。在该异常，或其子类抛出时，打印error日志。默认所有 java.lang.Throwable 类型。
 	 * Specify the Throwable types or it's sub types to be logged on Level.ERROR. 

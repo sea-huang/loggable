@@ -8,7 +8,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.sea-huang</groupId>
 	<artifactId>loggable</artifactId>
-	<version>1.0.1</version>
+	<version>1.1.0</version>
 	<name>loggable</name>
 	<description>AOP to log java methods developed by SeaHuang</description>
 	<url>https://github.com/sea-huang/loggable</url>
@@ -47,7 +47,7 @@
 		    <dependency>  
                 <groupId>org.springframework.boot</groupId>  
                 <artifactId>spring-boot-dependencies</artifactId>  
-                <version>1.5.2.RELEASE</version>  
+                <version>${spring.boot.dependencies.version}</version>  
                 <type>pom</type>  
                 <scope>import</scope>  
             </dependency>  
@@ -73,6 +73,11 @@
         <dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
+		    <optional>true</optional>
+		</dependency>
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
 		    <optional>true</optional>
 		</dependency>
 		<dependency>

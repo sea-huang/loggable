@@ -19,7 +19,7 @@ public class ConstraintViolationExceptionLogFormatter extends LogFormatterSuppor
 	protected LogFormatter<Throwable> throwableLogFormatter;
 	
 	public String format(Level level, JoinPoint jp, ConstraintViolationException throwable) {
-		StringBuilder result = new StringBuilder(throwableLogFormatter.format(level, jp, throwable));
+		StringBuilder result = new StringBuilder(throwableLogFormatter.format(level, jp, throwable, null));
 		Set<ConstraintViolation<?>> violations = throwable.getConstraintViolations();
 		for(ConstraintViolation<?> each : violations){
 			Iterator<Path.Node> pathIterator = each.getPropertyPath().iterator();

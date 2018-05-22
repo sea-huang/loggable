@@ -28,14 +28,14 @@ public class DefaultLogPrinter implements LogPrinter, InitializingBean {
 		}
 	}
 	
-	public void printSuccess(JoinPoint jp, Object result) {
+	public void printSuccess(JoinPoint jp, Object result, Long milliseconds) {
 		Success t = new Success(result);
 		MethodSignature methodSignature = (MethodSignature)jp.getSignature();
 		Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
 		Logger logger = LoggerFactory.getLogger(methodSignature.getDeclaringType());
 		Level level = decideLevel(loggable, t);
 		LogFormatter<Success> formatter = decideFormatter(t);
-		String logContent = formatter.format(level, jp, t);
+		String logContent = formatter.format(level, jp, t, milliseconds);
 		
 		switch(level){
 		case OFF : /* do nothing */ break;
@@ -47,13 +47,13 @@ public class DefaultLogPrinter implements LogPrinter, InitializingBean {
 		}
 	}
 	
-	public <T extends Throwable> void printThrowable(JoinPoint jp, T t) {
+	public <T extends Throwable> void printThrowable(JoinPoint jp, T t, Long milliseconds) {
 		MethodSignature methodSignature = (MethodSignature)jp.getSignature();
 		Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
 		Logger logger = LoggerFactory.getLogger(methodSignature.getDeclaringType());
 		Level level = decideLevel(loggable, t);
 		LogFormatter<T> formatter = decideFormatter(t);
-		String logContent = formatter.format(level, jp, t);
+		String logContent = formatter.format(level, jp, t, milliseconds);
 		
 		switch(level){
 		case OFF : /* do nothing */ break;

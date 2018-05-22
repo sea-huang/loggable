@@ -8,6 +8,6 @@ public interface LogFormatter<T extends Throwable> {
 	
 	Class<T> getTargetType();
 	
-	String format(Level level, JoinPoint jp, T throwable);
+	String format(Level level, JoinPoint jp, T throwable, Long milliseconds);
 	
 }
