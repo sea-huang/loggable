@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 public @interface LogLength {
 	/**
 	 * 设置哪些Level级别将在日志中只记录条数, 其他级别应用默认输出。 默认应用于所有级别
-	 * Set Levels on which onely the length of parameters or result value will be logged,
+	 * @return Set Levels on which onely the length of parameters or result value will be logged,
 	 * , other will apply the default formatter. default for all levels.
 	 */
 	Level[] value() default {Level.ERROR, Level.WARN

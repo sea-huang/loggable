@@ -23,12 +23,12 @@ import com.github.seahuang.log.formatter.type.TypeFormatter;
 public @interface LogFormat {
 	/**
 	 * 指定自定义的日志输出类的类型，确保该类包含一个无参构造器。
-	 * customize the formatter, a default constructor with no parameter should be assured.
+	 * @return customize the formatter, a default constructor with no parameter should be assured.
 	 */
 	Class<? extends TypeFormatter> value();
 	/**
 	 * 设置哪些Level级别应用这个自定义的日志输出, 其他级别应用默认输出。 默认应用于所有级别
-	 * Set Levels on which parameters or result value will apply the TypeFormatter defined here,
+	 * @return Set Levels on which parameters or result value will apply the TypeFormatter defined here,
 	 * , other will apply the default formatter. default for all levels.
 	 */
 	Level[] onLevel() default {Level.ERROR, Level.WARN

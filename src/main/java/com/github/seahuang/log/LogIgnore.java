@@ -20,7 +20,7 @@ import java.lang.annotation.Target;
 public @interface LogIgnore {
 	/**
 	 * 设置哪些Level级别将在日志中被略过, 其他级别应用默认输出。 默认应用于所有级别
-	 * Set Levels on which parameters or result value will be ignored for logging,
+	 * @return Set Levels on which parameters or result value will be ignored for logging,
 	 * , other will apply the default formatter. default for all levels.
 	 */
 	Level[] value() default {Level.ERROR, Level.WARN
