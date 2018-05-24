@@ -8,6 +8,7 @@
 - 1.0.1  修复JSON框架自动修复机制  
 - 1.1.0  增加Gson支持， 新增记录时长功能<b>Log Duration</b> 
 - 1.1.1  修复不复用DurationRecorder
+- 1.1.2  移除依赖 spring-starter-logging, 支持xml配置
 
 ### 配置
 - 添加 Maven 依赖:
@@ -49,6 +50,14 @@
 	
 	}
 	</code></pre>
+	
+	或者XML配置
+	
+	```xml
+	<bean class="com.github.seahuang.log.spring.LoggableAutoConfiguration">
+		<property name="globalLogDuration" value="true"/><!--optional-->
+	</bean>
+	```
 
 ### 举个栗子
 

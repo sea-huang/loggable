@@ -8,6 +8,7 @@ AOP Log facilities to rescue you from logging java methods
 - 1.0.1  fix autodetecting json frameworks  
 - 1.1.0  add support for Gson and <b>Log Duration</b> feature 
 - 1.1.1  fix DurationRecorder prototype
+- 1.1.2  remove dependency spring-starter-logging, add support for xml config
 
 ### Set up
 - add maven dependency:
@@ -16,7 +17,7 @@ AOP Log facilities to rescue you from logging java methods
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.1.1</version>
+	  <version>1.1.2</version>
 	</dependency>
 	```
 
@@ -49,6 +50,14 @@ AOP Log facilities to rescue you from logging java methods
 	
 	}
 	</code></pre>
+	
+	or XML config
+	
+	```xml
+	<bean class="com.github.seahuang.log.spring.LoggableAutoConfiguration">
+		<property name="globalLogDuration" value="true"/><!--optional-->
+	</bean>
+	```
 
 ### Usage Examples
 

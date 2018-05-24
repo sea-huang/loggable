@@ -5,12 +5,14 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
 import org.springframework.context.annotation.Role;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.Order;
@@ -40,7 +42,7 @@ import com.github.seahuang.log.printer.LogPrinter;
 
 @Configuration
 public class LoggableAutoConfiguration implements ImportAware {
-	protected Boolean logDuration;
+	protected Boolean globalLogDuration = false;
 	
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
@@ -56,11 +58,12 @@ public class LoggableAutoConfiguration implements ImportAware {
 	}
 	
 	@Bean
+	@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 	@ConditionalOnMissingBean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public DurationRecorder durationRecorder(){
 		DefaultDurationRecorder recorder =  new DefaultDurationRecorder();
-		recorder.setDefaultLogDuration(logDuration);
+		recorder.setDefaultLogDuration(globalLogDuration);
 		return recorder;
 	}
 	
@@ -154,6 +157,15 @@ public class LoggableAutoConfiguration implements ImportAware {
 
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
 		AnnotationAttributes enableLTSScheduling = AnnotationAttributes.fromMap(importMetadata.getAnnotationAttributes(EnableLoggable.class.getName()));
-		logDuration = enableLTSScheduling.getBoolean("logDuration");
+		globalLogDuration = enableLTSScheduling.getBoolean("logDuration");
 	}
+
+	public Boolean getGlobalLogDuration() {
+		return globalLogDuration;
+	}
+
+	public void setGlobalLogDuration(Boolean globalLogDuration) {
+		this.globalLogDuration = globalLogDuration;
+	}
+	
 }
