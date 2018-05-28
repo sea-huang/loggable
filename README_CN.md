@@ -18,7 +18,7 @@
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.1.1</version>
+	  <version>1.1.3</version>
 	</dependency>
 	```
 
