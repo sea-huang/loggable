@@ -9,6 +9,7 @@
 - 1.1.0  增加Gson支持， 新增记录时长功能<b>Log Duration</b> 
 - 1.1.1  修复不复用DurationRecorder
 - 1.1.2  移除依赖 spring-starter-logging, 支持xml配置
+- 1.1.3  移除了不兼容的 java.lang.Parameter. 修复了测试相关设施
 
 ### 配置
 - 添加 Maven 依赖:

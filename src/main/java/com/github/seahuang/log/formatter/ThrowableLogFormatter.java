@@ -1,6 +1,6 @@
 package com.github.seahuang.log.formatter;
 
-import java.lang.reflect.Parameter;
+import java.lang.annotation.Annotation;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -25,11 +25,11 @@ public class ThrowableLogFormatter extends LogFormatterSupport<Throwable> {
 			.append("(");
 		
 		String[] parameterNames = methodSignature.getParameterNames();
-		Parameter[] parameters = methodSignature.getMethod().getParameters();
+		Annotation[][] parameterAnnotations = methodSignature.getMethod().getParameterAnnotations();
 		Object[] arguments = jp.getArgs();
 		for(int i = 0; i < parameterNames.length; i++){
 			result.append(parameterNames[i]).append("=")
-				.append(typeFormatterAdapter.format(parameters[i], level, arguments[i]))
+				.append(typeFormatterAdapter.format(parameterAnnotations[i], level, arguments[i]))
 				.append(",");
 		}
 		if(',' == result.charAt(result.length() - 1)){

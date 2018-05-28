@@ -1,16 +1,15 @@
 package com.github.seahuang.log.formatter.type;
 
-import java.lang.reflect.AnnotatedElement;
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.AnnotationUtils;
 
-import com.github.seahuang.log.LogIgnore;
-import com.github.seahuang.log.LogLength;
 import com.github.seahuang.log.Level;
 import com.github.seahuang.log.LogFormat;
+import com.github.seahuang.log.LogIgnore;
+import com.github.seahuang.log.LogLength;
 
 public class DefaultTypeFormatterAdapter implements TypeFormatterAdaper {
 	private Logger logger = LoggerFactory.getLogger(DefaultTypeFormatterAdapter.class);
@@ -28,18 +27,18 @@ public class DefaultTypeFormatterAdapter implements TypeFormatterAdaper {
 	}
 	
 	
-	public String format(AnnotatedElement source, Level level, Object value){
-		if(source.isAnnotationPresent(LogIgnore.class)
-			&& Arrays.asList(source.getAnnotation(LogIgnore.class).value()).contains(level)){
+	public String format(Annotation[] annotaions, Level level, Object value){
+		LogIgnore logIgnore = getAnnotation(annotaions, LogIgnore.class);
+		if(logIgnore != null && Arrays.asList(logIgnore.value()).contains(level)){
 			return ignoreFormatter.format(level, value);
 		}
-		if(source.isAnnotationPresent(LogLength.class)
-			&& Arrays.asList(source.getAnnotation(LogLength.class).value()).contains(level)){
+		LogLength logLength = getAnnotation(annotaions, LogLength.class);
+		if(logLength != null && Arrays.asList(logLength.value()).contains(level)){
 			return lengthFormatter.format(level, value);
 		}
-		if(source.isAnnotationPresent(LogFormat.class)
-			&& Arrays.asList(source.getAnnotation(LogFormat.class).onLevel()).contains(level)){
-			Class<? extends TypeFormatter> formatter = AnnotationUtils.findAnnotation(source, LogFormat.class).value();
+		LogFormat logformat= getAnnotation(annotaions, LogFormat.class);
+		if(logformat != null && Arrays.asList(logformat.onLevel()).contains(level)){
+			Class<? extends TypeFormatter> formatter = logformat.value();
 			try{
 				return formatter.newInstance().format(level, value);
 			}catch(Exception e){
@@ -48,5 +47,14 @@ public class DefaultTypeFormatterAdapter implements TypeFormatterAdaper {
 			}
 		}
 		return defaultFormatter.format(level, value);
+	}
+	
+	protected <T extends Annotation> T getAnnotation(Annotation[] annotaions,  Class<T> wanted){
+		for(Annotation each : annotaions){
+			if(wanted.isInstance(each)){
+				return (T)each;
+			}
+		}
+		return null;
 	}
 }

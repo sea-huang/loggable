@@ -13,7 +13,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
 import org.springframework.context.annotation.Role;
 import org.springframework.context.annotation.Scope;
+import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.core.Ordered;
+import org.springframework.core.ParameterNameDiscoverer;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.type.AnnotationMetadata;
@@ -153,6 +155,13 @@ public class LoggableAutoConfiguration implements ImportAware {
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	public TypeFormatter defaultTypeFormatter(){
 		return new DefaultTypeFormatter();
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public ParameterNameDiscoverer parameterNameDiscoverer(){
+		return new LocalVariableTableParameterNameDiscoverer();
 	}
 
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
