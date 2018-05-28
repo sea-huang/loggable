@@ -9,6 +9,7 @@ AOP Log facilities to rescue you from logging java methods
 - 1.1.0  add support for Gson and <b>Log Duration</b> feature 
 - 1.1.1  fix DurationRecorder prototype
 - 1.1.2  remove dependency spring-starter-logging, add support for xml config
+- 1.1.3  remove incompatible java.lang.Parameter. fix test facilities.
 
 ### Set up
 - add maven dependency:
@@ -17,7 +18,7 @@ AOP Log facilities to rescue you from logging java methods
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.1.2</version>
+	  <version>1.1.3</version>
 	</dependency>
 	```
 
