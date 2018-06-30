@@ -18,6 +18,7 @@ import com.github.seahuang.log.Success;
 import com.github.seahuang.log.formatter.LogFormatter;
 
 public class DefaultLogPrinter implements LogPrinter, InitializingBean {
+	private static Logger localLogger = LoggerFactory.getLogger(DefaultLogPrinter.class);
 	@Autowired
 	protected List<LogFormatter<?>> formatters;
 	protected Map<Class<? extends Throwable>, LogFormatter<?>> formaterByThrowable = new HashMap<Class<? extends Throwable>, LogFormatter<?>>();
@@ -29,39 +30,47 @@ public class DefaultLogPrinter implements LogPrinter, InitializingBean {
 	}
 	
 	public void printSuccess(JoinPoint jp, Object result, Long milliseconds) {
-		Success t = new Success(result);
-		MethodSignature methodSignature = (MethodSignature)jp.getSignature();
-		Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
-		Logger logger = LoggerFactory.getLogger(methodSignature.getDeclaringType());
-		Level level = decideLevel(loggable, t);
-		LogFormatter<Success> formatter = decideFormatter(t);
-		String logContent = formatter.format(level, jp, t, milliseconds);
-		
-		switch(level){
-		case OFF : /* do nothing */ break;
-		case TRACE : logger.trace(logContent); break;
-		case DEBUG : logger.debug(logContent); break;
-		case INFO : logger.info(logContent); break;
-		case WARN : logger.warn(logContent); break;
-		case ERROR : logger.error(logContent); break;
+		try{
+			Success t = new Success(result);
+			MethodSignature methodSignature = (MethodSignature)jp.getSignature();
+			Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
+			Logger logger = LoggerFactory.getLogger(methodSignature.getDeclaringType());
+			Level level = decideLevel(loggable, t);
+			LogFormatter<Success> formatter = decideFormatter(t);
+			String logContent = formatter.format(level, jp, t, milliseconds);
+			
+			switch(level){
+			case OFF : /* do nothing */ break;
+			case TRACE : logger.trace(logContent); break;
+			case DEBUG : logger.debug(logContent); break;
+			case INFO : logger.info(logContent); break;
+			case WARN : logger.warn(logContent); break;
+			case ERROR : logger.error(logContent); break;
+			}
+		}catch(Exception e){
+			localLogger.warn("printSuccess error", e);
 		}
 	}
 	
 	public <T extends Throwable> void printThrowable(JoinPoint jp, T t, Long milliseconds) {
-		MethodSignature methodSignature = (MethodSignature)jp.getSignature();
-		Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
-		Logger logger = LoggerFactory.getLogger(methodSignature.getDeclaringType());
-		Level level = decideLevel(loggable, t);
-		LogFormatter<T> formatter = decideFormatter(t);
-		String logContent = formatter.format(level, jp, t, milliseconds);
-		
-		switch(level){
-		case OFF : /* do nothing */ break;
-		case TRACE : logger.trace(logContent, t); break;
-		case DEBUG : logger.debug(logContent, t); break;
-		case INFO : logger.info(logContent, t); break;
-		case WARN : logger.warn(logContent, t); break;
-		case ERROR : logger.error(logContent, t); break;
+		try{
+			MethodSignature methodSignature = (MethodSignature)jp.getSignature();
+			Loggable loggable = AnnotationUtils.findAnnotation(methodSignature.getMethod(), Loggable.class);
+			Logger logger = LoggerFactory.getLogger(methodSignature.getDeclaringType());
+			Level level = decideLevel(loggable, t);
+			LogFormatter<T> formatter = decideFormatter(t);
+			String logContent = formatter.format(level, jp, t, milliseconds);
+			
+			switch(level){
+			case OFF : /* do nothing */ break;
+			case TRACE : logger.trace(logContent, t); break;
+			case DEBUG : logger.debug(logContent, t); break;
+			case INFO : logger.info(logContent, t); break;
+			case WARN : logger.warn(logContent, t); break;
+			case ERROR : logger.error(logContent, t); break;
+			}
+		}catch(Exception e){
+			localLogger.warn("printThrowable error", e);
 		}
 		
 	}
