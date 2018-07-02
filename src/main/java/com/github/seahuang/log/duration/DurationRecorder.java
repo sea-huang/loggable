@@ -9,7 +9,7 @@ public interface DurationRecorder {
 	/**
 	 * 全局设置是否记录时间
 	 * Set global default whether or not log duration
-	 * @param defaultLogDuration
+	 * @param defaultLogDuration  Set global value for default
 	 */
 	void setDefaultLogDuration(Boolean defaultLogDuration);
 	/**

@@ -11,7 +11,8 @@ import java.lang.annotation.Target;
 import com.github.seahuang.log.duration.LogDuration;
 
 /**
- * Doc: {@link <a href="https://github.com/sea-huang/loggable">https://github.com/sea-huang/loggable</a>}
+ * Document: {@link <a href="https://github.com/sea-huang/loggable">https://github.com/sea-huang/loggable</a>}
+ * 
  * @author 黄海
  * @see com.github.seahuang.log.LoggableAspect
  * @see com.github.seahuang.log.spring.LoggableAutoConfiguration
