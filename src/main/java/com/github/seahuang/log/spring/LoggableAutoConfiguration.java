@@ -30,6 +30,7 @@ import com.github.seahuang.log.formatter.ConstraintViolationExceptionLogFormatte
 import com.github.seahuang.log.formatter.LogFormatter;
 import com.github.seahuang.log.formatter.SuccessLogFormatter;
 import com.github.seahuang.log.formatter.ThrowableLogFormatter;
+import com.github.seahuang.log.formatter.type.CompositeScriptTypeFormatter;
 import com.github.seahuang.log.formatter.type.DefaultTypeFormatter;
 import com.github.seahuang.log.formatter.type.DefaultTypeFormatterAdapter;
 import com.github.seahuang.log.formatter.type.FastJsonTypeFormatter;
@@ -37,6 +38,9 @@ import com.github.seahuang.log.formatter.type.GsonTypeFormatter;
 import com.github.seahuang.log.formatter.type.IgnoreTypeFormatter;
 import com.github.seahuang.log.formatter.type.JacksonTypeFormatter;
 import com.github.seahuang.log.formatter.type.LengthTypeFormatter;
+import com.github.seahuang.log.formatter.type.ScriptEngineTypeFormatter;
+import com.github.seahuang.log.formatter.type.ScriptTypeFormatter;
+import com.github.seahuang.log.formatter.type.SpelTypeFormatter;
 import com.github.seahuang.log.formatter.type.TypeFormatter;
 import com.github.seahuang.log.formatter.type.TypeFormatterAdaper;
 import com.github.seahuang.log.printer.DefaultLogPrinter;
@@ -112,14 +116,37 @@ public class LoggableAutoConfiguration implements ImportAware {
 		return new IgnoreTypeFormatter();
 	}
 	
+	@Bean(name="c.g.s.l.f.t.ScriptTypeFormatter")
+	@ConditionalOnMissingBean(name="c.g.s.l.f.t.ScriptTypeFormatterter")
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public ScriptTypeFormatter scriptTypeFormatter(){
+		return new CompositeScriptTypeFormatter();
+	}
+	
+	@Bean(name="c.g.s.l.f.t.SpelTypeFormatter")
+	@ConditionalOnMissingBean(name="c.g.s.l.f.t.SpelTypeFormatterter")
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public ScriptTypeFormatter spelTypeFormatter(){
+		return new SpelTypeFormatter();
+	}
+	
+	@Bean(name="c.g.s.l.f.t.ScriptEngineTypeFormatter")
+	@ConditionalOnMissingBean(name="c.g.s.l.f.t.ScriptEngineTypeFormatter")
+	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+	public ScriptTypeFormatter scriptEngineTypeFormatter(){
+		return new ScriptEngineTypeFormatter();
+	}
+	
 	@Bean
 	@Role(BeanDefinition.ROLE_INFRASTRUCTURE)
 	@ConditionalOnMissingBean
 	public TypeFormatterAdaper typeFormatterAdapter(
 		@Qualifier("c.g.s.l.f.t.LengthTypeFormatter")TypeFormatter lengthFormatter,
 		@Qualifier("c.g.s.l.f.t.IgnoreTypeFormatter")TypeFormatter ignoreFormatter, 
-		@Qualifier("c.g.s.l.f.t.DefaultTypeFormatter")TypeFormatter defaultFormatter){
-		return new DefaultTypeFormatterAdapter(lengthFormatter, ignoreFormatter, defaultFormatter);
+		@Qualifier("c.g.s.l.f.t.DefaultTypeFormatter")TypeFormatter defaultFormatter,
+		@Qualifier("c.g.s.l.f.t.ScriptTypeFormatter")ScriptTypeFormatter scriptTypeFormatter){
+		return new DefaultTypeFormatterAdapter(lengthFormatter
+				, ignoreFormatter, defaultFormatter, scriptTypeFormatter);
 	}
 	
 	@Order(value = Ordered.LOWEST_PRECEDENCE - 3)

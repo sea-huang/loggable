@@ -43,4 +43,14 @@ public class TesteeServiceTest {
 	public void validateReturn(){
 		testeeService.validateParameters("AA", 1);
 	}
+	
+	@Test
+	public void testLogScript(){
+		testeeService.logScript("one", 2);
+	}
+	
+	@Test
+	public void testLogJavaScript(){
+		testeeService.logJavaScript("one", 2);
+	}
 }

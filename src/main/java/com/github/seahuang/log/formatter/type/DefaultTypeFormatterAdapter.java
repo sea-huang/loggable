@@ -10,20 +10,24 @@ import com.github.seahuang.log.Level;
 import com.github.seahuang.log.LogFormat;
 import com.github.seahuang.log.LogIgnore;
 import com.github.seahuang.log.LogLength;
+import com.github.seahuang.log.LogScript;
 
 public class DefaultTypeFormatterAdapter implements TypeFormatterAdaper {
 	private Logger logger = LoggerFactory.getLogger(DefaultTypeFormatterAdapter.class);
 	protected TypeFormatter lengthFormatter;
 	protected TypeFormatter ignoreFormatter;
 	protected TypeFormatter defaultFormatter;
+	protected ScriptTypeFormatter scriptTypeFormatter;
 	
 	public DefaultTypeFormatterAdapter(
 			  TypeFormatter lengthFormatter
 			, TypeFormatter ignoreFormatter
-			, TypeFormatter defaultFormatter){
+			, TypeFormatter defaultFormatter
+			, ScriptTypeFormatter scriptTypeFormatter){
 		this.lengthFormatter = lengthFormatter;
 		this.ignoreFormatter = ignoreFormatter;
 		this.defaultFormatter = defaultFormatter;
+		this.scriptTypeFormatter = scriptTypeFormatter;
 	}
 	
 	
@@ -35,6 +39,10 @@ public class DefaultTypeFormatterAdapter implements TypeFormatterAdaper {
 		LogLength logLength = getAnnotation(annotaions, LogLength.class);
 		if(logLength != null && Arrays.asList(logLength.value()).contains(level)){
 			return lengthFormatter.format(level, value);
+		}
+		LogScript logScript = getAnnotation(annotaions, LogScript.class);
+		if(logScript != null && Arrays.asList(logScript.onLevel()).contains(level)){
+			return scriptTypeFormatter.format(level, value, logScript);
 		}
 		LogFormat logformat= getAnnotation(annotaions, LogFormat.class);
 		if(logformat != null && Arrays.asList(logformat.onLevel()).contains(level)){

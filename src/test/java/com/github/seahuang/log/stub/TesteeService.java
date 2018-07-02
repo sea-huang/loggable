@@ -13,6 +13,7 @@ import com.github.seahuang.log.Level;
 import com.github.seahuang.log.LogFormat;
 import com.github.seahuang.log.LogIgnore;
 import com.github.seahuang.log.LogLength;
+import com.github.seahuang.log.LogScript;
 import com.github.seahuang.log.Loggable;
 import com.github.seahuang.log.duration.LogDuration;
 import com.github.seahuang.log.formatter.type.TypeFormatter;
@@ -58,6 +59,25 @@ public class TesteeService {
 	@Loggable(value="WarnningOnBusinessException", warningOn=BusinessException.class)
 	public String logWarnninngOnBusinessException(String one, Integer two){
 		return null;
+	}
+	
+	@Loggable("Script log test")
+	public @LogScript("#t.size() > 1 ? #t[0] + #t[1] : ''")List<String> logScript(@LogScript("'arg1: ' + #t")String one,@LogScript("10 + #t") Integer two){
+		List<String> result = new ArrayList<String>();
+		result.add("aa");
+		result.add("bb");
+		return result;
+	}
+	
+	@Loggable("JavaScript log test")
+	public @LogScript(value = "t.size() > 1 ? t[0] + t[1] : ''", lang="javascript")
+		List<String> logJavaScript(
+				@LogScript(value = "'arg1: ' + t", lang="javascript")String one
+				,@LogScript(value = "10 + t", lang="javascript") Integer two){
+		List<String> result = new ArrayList<String>();
+		result.add("aa");
+		result.add("bb");
+		return result;
 	}
 	
 	

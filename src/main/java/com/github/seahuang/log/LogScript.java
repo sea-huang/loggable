@@ -9,6 +9,8 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import com.github.seahuang.log.formatter.type.SpelTypeFormatter;
+
 @Inherited
 @Documented
 @Retention(RUNTIME)
@@ -27,19 +29,20 @@ public @interface LogScript {
 	 *         expected by the JSR 223 {@link javax.script.ScriptEngineManager}. A
 	 *         {@link javax.validation.ConstraintDeclarationException} will be thrown upon script
 	 *         evaluation, if no engine for the given language could be found. 
-	 *         Default to javascript.
+	 *         Or spring's SPEL as the special one.
+	 *         Default to spel.
 	 */
-	String lang() default "javascript";
+	String lang() default SpelTypeFormatter.LANG;
 
 	/**
 	 * @return The name, under which the annotated element shall be registered
 	 *         within the script context. Defaults to "_t".
 	 */
-	String alias() default "_t";
+	String alias() default "t";
 	
 	/**
-	 * 设置哪些Level级别将在日志中只记录条数, 其他级别应用默认输出。 默认应用于所有级别
-	 * @return Set Levels on which onely the length of parameters or result value will be logged,
+	 * 设置哪些Level级别将在日志中使用, 其他级别应用默认输出。 默认应用于所有级别
+	 * @return Set Levels on which the script will be applied,
 	 * , other will apply the default formatter. default for all levels.
 	 */
 	Level[] onLevel() default {Level.ERROR, Level.WARN
