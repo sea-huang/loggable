@@ -10,6 +10,7 @@
 - 1.1.1  修复不复用DurationRecorder
 - 1.1.2  移除依赖 spring-starter-logging, 支持xml配置
 - 1.1.3  移除了不兼容的 java.lang.Parameter. 修复了测试相关设施
+- 1.2.0  增加@LogScript, 提高稳定性
 
 ### 配置
 - 添加 Maven 依赖:
@@ -18,7 +19,7 @@
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.1.3</version>
+	  <version>1.2.0</version>
 	</dependency>
 	```
 
@@ -122,6 +123,15 @@ public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
   - @LogLength 只记录集合或数组的大小（长度）
   - @LogIngore 忽略某个参数或结果
  - @LogFormat 自定义参数或结果的输出
+ - @LogScript 用脚本来定制格式, 默认使用SPEL/ javascript 和其他 java 支持的脚本引擎也可以使用
+ 
+ <pre>
+ 	@Loggable("Script log test")
+	public <b>@LogScript("#t.size() > 1 ? #t[0] + #t[1] : ''")</b>List<String> logScript(
+			<b>@LogScript("'arg1: ' + #t")</b> String one
+			,<b>@LogScript("10 + #t")</b> Integer two){
+ 
+ </pre>
 
 - 可以和校验框架结合，打印出违反的校验约束
 <pre>@Loggable("validateMethod")

@@ -62,7 +62,9 @@ public class TesteeService {
 	}
 	
 	@Loggable("Script log test")
-	public @LogScript("#t.size() > 1 ? #t[0] + #t[1] : ''")List<String> logScript(@LogScript("'arg1: ' + #t")String one,@LogScript("10 + #t") Integer two){
+	public @LogScript("#t.size() > 1 ? #t[0] + #t[1] : ''")List<String> logScript(
+			@LogScript("'arg1: ' + #t")String one
+			,@LogScript("10 + #t") Integer two){
 		List<String> result = new ArrayList<String>();
 		result.add("aa");
 		result.add("bb");

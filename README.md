@@ -10,6 +10,7 @@ AOP Log facilities to rescue you from logging java methods
 - 1.1.1  fix DurationRecorder prototype
 - 1.1.2  remove dependency spring-starter-logging, add support for xml config
 - 1.1.3  remove incompatible java.lang.Parameter. fix test facilities.
+- 1.2.0 add @LogScript, enhance stability
 
 ### Set up
 - add maven dependency:
@@ -18,7 +19,7 @@ AOP Log facilities to rescue you from logging java methods
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.1.3</version>
+	  <version>1.2.0</version>
 	</dependency>
 	```
 
@@ -122,6 +123,15 @@ public <b>@LogLength</b> List<String> customizeLog(<b>@LogIgnore</b> String one
   - @LogLength only log the length of a collection or array.
   - @LogIngore ignore the parameter or result when format the output
  - @LogFormat give a self defined implementation class type for TypeFormatter, by which to format the parameter output
+ - @LogScript  use script to customize the format, SPEL for default / javascript and other java supported script engines also included
+ 
+ <pre>
+ 	@Loggable("Script log test")
+	public <b>@LogScript("#t.size() > 1 ? #t[0] + #t[1] : ''")</b>List<String> logScript(
+			<b>@LogScript("'arg1: ' + #t")</b> String one
+			,<b>@LogScript("10 + #t")</b> Integer two){
+ 
+ </pre>
 
 - Combine with Method Validation
 <pre>@Loggable("validateMethod")
