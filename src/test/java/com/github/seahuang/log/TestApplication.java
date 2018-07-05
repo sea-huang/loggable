@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.github.seahuang.log.spring.EnableLoggable;
 
-@EnableLoggable(logDuration=true)
+//@EnableLoggable(logDuration=true)
 @SpringBootApplication
 public class TestApplication {
 	

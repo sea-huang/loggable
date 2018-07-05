@@ -4,10 +4,12 @@ import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
@@ -47,7 +49,9 @@ import com.github.seahuang.log.printer.DefaultLogPrinter;
 import com.github.seahuang.log.printer.LogPrinter;
 
 @Configuration
+@ConditionalOnProperty(prefix="loggable", name="enabled", havingValue="true", matchIfMissing=true)
 public class LoggableAutoConfiguration implements ImportAware {
+	@Value("${loggable.globalLogDuration:false}")
 	protected Boolean globalLogDuration = false;
 	
 	@Bean
@@ -193,7 +197,9 @@ public class LoggableAutoConfiguration implements ImportAware {
 
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
 		AnnotationAttributes enableLTSScheduling = AnnotationAttributes.fromMap(importMetadata.getAnnotationAttributes(EnableLoggable.class.getName()));
-		globalLogDuration = enableLTSScheduling.getBoolean("logDuration");
+		if(enableLTSScheduling != null){
+			globalLogDuration = enableLTSScheduling.getBoolean("logDuration");
+		}
 	}
 
 	public Boolean getGlobalLogDuration() {
