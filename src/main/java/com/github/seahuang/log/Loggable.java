@@ -28,10 +28,10 @@ public @interface Loggable {
 	 */
 	String value() default "";
 	/**
-	 * 方法成功执行后打日志，默认级别为INFO，可以使用Level.OFF关闭。
+	 * 方法成功执行后打日志，默认级别为DEBUG，可以使用Level.OFF关闭。
 	 * @return Set the log level on success, can be turn off by Level.OFF
 	 */
-	Level onSuccess() default Level.INFO;
+	Level onSuccess() default Level.DEBUG;
 	/**
 	 * 设置时间记录策略
 	 * @see LogDuration
