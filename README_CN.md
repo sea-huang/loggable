@@ -11,7 +11,7 @@
 - 1.1.2  移除依赖 spring-starter-logging, 支持xml配置
 - 1.1.3  移除了不兼容的 java.lang.Parameter. 修复了测试相关设施
 - 1.2.0  增加@LogScript, 提高稳定性
-
+- 1.3.0 增加 spring boot 支持，执行成功的默认日志级别从INFO调整为DEBUG
 ### 配置
 - 添加 Maven 依赖:
 
@@ -19,7 +19,7 @@
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.2.0</version>
+	  <version>1.3.0</version>
 	</dependency>
 	```
 
@@ -43,7 +43,7 @@
 		<artifactId>gson</artifactId>
 	</dependency>
 	```
-	
+
 - 配置代码
 
 	<pre><code><b>@EnableLoggable</b>
@@ -60,7 +60,12 @@
 		<property name="globalLogDuration" value="true"/><!--optional-->
 	</bean>
 	```
-
+	对于spring boot项目, Loggable 自动装配，不需要任何配置. 不过有两个可选的配置项
+	<pre>
+	loggable.enabled=false
+	loggable.globalLogDuration=true
+	</pre>
+	
 ### 举个栗子
 
 - 被测试的服务： 

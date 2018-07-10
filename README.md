@@ -11,6 +11,7 @@ AOP Log facilities to rescue you from logging java methods
 - 1.1.2  remove dependency spring-starter-logging, add support for xml config
 - 1.1.3  remove incompatible java.lang.Parameter. fix test facilities.
 - 1.2.0 add @LogScript, enhance stability
+- 1.3.0 add spring boot support, default level on success from INFO to DEBUG
 
 ### Set up
 - add maven dependency:
@@ -19,7 +20,7 @@ AOP Log facilities to rescue you from logging java methods
 	<dependency>
 	  <groupId>com.github.sea-huang</groupId>
 	  <artifactId>loggable</artifactId>
-	  <version>1.2.0</version>
+	  <version>1.3.0</version>
 	</dependency>
 	```
 
@@ -60,6 +61,12 @@ AOP Log facilities to rescue you from logging java methods
 		<property name="globalLogDuration" value="true"/><!--optional-->
 	</bean>
 	```
+	
+	for spring boot project, Loggable is auto configuired without any specific declaring. but two optional config available:
+	<pre>
+	loggable.enabled=false
+	loggable.globalLogDuration=true
+	</pre>
 
 ### Usage Examples
 
